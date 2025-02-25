@@ -1,0 +1,199 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[english]{babel}
+% \usepackage[utf8x]{inputenc}
+
+\usepackage{graphicx} % Required for inserting images.
+\usepackage[margin=25mm]{geometry}
+\parskip 10pt  % Sets spacing between paragraphs.
+\renewcommand{\baselinestretch}{1.2}  % Sets pacing between lines.
+\parindent 8.4pt  % Sets leading space for paragraphs.
+\usepackage[font=sf]{caption} % Changes font of captions.
+\usepackage{setspace}
+\usepackage{enumitem}
+\renewcommand{\labelitemi}{--}
+\setlist[itemize]{itemsep=0.5pt}
+
+\usepackage{amsmath}
+\usepackage{amsthm} % Environment for proofs
+\usepackage{ulem}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{verbatim}
+\usepackage{natbib} % Required for APA-style citations.
+\bibliographystyle{unsrtnat}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{mathtools}
+\usepackage{booktabs}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+\newcommand{\green}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\expect}[1]{\mathbb{E}\left[ #1 \right]}
+\newcommand{\expectProb}[2]{\mathbb{E}^{#1}\left[ #2 \right]}
+\newcommand{\expectCond}[2]{\mathbb{E}_{#1}\left[ #2 \right]}
+\newcommand{\expectCondProb}[3]{\mathbb{E}_{#1}^{#2}\left[ #3 \right]}
+\newcommand{\scalar}[2]{\left< #1, #2 \right>}
+\newcommand{\var}[1]{\mathbb{V}\left[ #1 \right]}
+\newcommand{\VaR}[2]{\mathbb{V}a\mathbb{R}^{#1}_{#2}}
+\newcommand{\ES}[2]{\mathbb{ES}^{#1}_{#2}}
+\newcommand{\varCond}[2]{\mathbb{V}_{#1}\left[ #2 \right]}
+\newcommand{\cov}[2]{\mathbb{C}\text{ov}\left[ #1, #2 \right]}
+\newcommand{\normal}[2]{\mathcal{N}\left( #1, #2 \right)}
+\newcommand{\chisquared}[2]{\chi^2_{#1}\left( #2 \right)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\Srond}{\mathcal{S}}
+\newcommand{\Hrond}{\mathcal{H}}
+\newcommand{\probP}{\mathbb{P}}
+\newcommand{\partP}{\mathcal{P}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\probQ}{\mathbb{Q}}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\indic}[1]{\mathbf{1}_{#1}}
+\newcommand{\crochet}[2]{\langle #1 , #2 \rangle}
+\newcommand{\qed}{\hfill \ensuremath{\Box}}
+
+\title{Gap Risk}
+\author{\Large Nathan Sanglier\footnote{nathan.sanglier@etu.u-paris.fr}, Ronan Pécheul\footnote{ronan.pecheul@etu.u-paris.fr}}
+
+\begin{document}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\maketitle
+
+\begin{abstract}
+    In this project, we worked... I guess...
+
+\end{abstract}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\section{Warm up for All: CVA w/o RIM}\label{sec:CVA_int}
+xxx
+
+\section{MVA for PIM}\label{sec:MVA}
+
+\noindent\textbf{Lemma 3.1}
+\[
+\VaR{a}{t}\left( -\beta_{t^\delta}\left( \text{MtM}_{t^\delta} + \Delta_{t^\delta} \right) + \beta_t \text{MtM}_t \right) = \text{Nom} \times B(t) \times \hat{S}_t
+\]
+where $B(t) = f(t) \times \left[ 1 - \exp\left( \sigma\sqrt{\delta}\Phi^{-1}(1-a) - \frac{\sigma^2}{2}\delta \right) \right]$.\\
+
+\noindent\textbf{\textit{Proof:}}\\
+As $\beta_{t^\delta}\left( \text{MtM}_{t^\delta} + \Delta_{t^\delta} \right) - \beta_t \text{MtM}_t = \text{Nom} \times f(t) \times \left(\hat{S}_{t^\delta} - \hat{S}_t\right)$ do have:
+\begin{align*}
+    \VaR{a}{t}( -\beta_{t^\delta}&\left( \text{MtM}_{t^\delta} + \Delta_{t^\delta} \right) + \beta_t \text{MtM}_t) \\
+    &=\VaR{a}{t}\left( \text{Nom} \times f(t) \times \left( \hat{S}_t - \hat{S}_{t^\delta} \right) \right)\\
+    &=\text{Nom} \times f(t) \times \hat{S}_t \times \VaR{a}{t}\left( 1-\exp\left(\sigma(W_{t+\delta}-W_t)-\frac{\sigma^2}{2}\delta\right) \right)\\
+    &=\text{Nom} \times f(t) \times \underbrace{\hat{S}_t \times \left[ 1-\exp\left(\sigma\underbrace{\VaR{1-a}{t}(W_{t+\delta}-W_t)}_{\Phi^-1(1-a)}-\frac{\sigma^2}{2}\delta\right) \right]}_{B(t)}
+\end{align*}
+Which is what we wanted to show.
+\qed
+
+\noindent\textbf{Proposition 3.1}\\
+The MVA of the bank is given, at time 0, by:
+\[
+\text{MVA}_0 = \text{Nom} \times S_0 \times \int_0^T B(t)\gamma(t)e^{\int_0^t \gamma_1(s)ds} dt
+\]
+\textbf{\textit{Proof:}}\\
+We do have:
+\begin{align*}
+\text{MVA}_0 &= \expect{\int_0^T \beta_t \gamma(t)\text{PIM}_te^{-\int_0^t \gamma_1(s)ds}dt}\\
+&= \int_0^T \gamma(t) \text{Nom} B(t) \expect{ \beta_t \hat{S}_t }e^{-\int_0^t \gamma_1(s)ds}dt\\ 
+&= \text{Nom} S_0 \int_0^T \gamma(t) (t) e^{-\int_0^t \gamma_1(s)ds}dt
+\end{align*}
+
+\red{SHOULD WE TRY TO PROVE WHY $MVA_0$ IS WHAT IT IS?}
+\qed
+
+
+\section{CVA w/ PIM}\label{sec:CVA}
+
+\noindent\textbf{Lemma 4.1}
+\[
+\mathbb{E}_t\left[ \left( \beta_{t^\delta} \left( \text{MtM}_{t^\delta} + \Delta_{t^\delta} \right) - \beta_t \left( \text{MtM}_t + \text{RIM}_t \right) \right)^+ \right] = \text{Nom} \times C(t) \times \hat{S}_t
+\]
+where $C(t) = (1-a) \times f(t) \times e^{-\frac{\sigma^2}{2}\delta}\left[ e^{\sigma\sqrt{\delta}\frac{\phi\left(\Phi^{-1}(a)\right)}{1-a}} - e^{\sigma\sqrt{\delta}\Phi^{-1}(a)} \right]$\\
+\textbf{\textit{Proof:}}\\
+We do note $X=\beta_{t^\delta} \left( \text{MtM}_{t^\delta} + \Delta_{t^\delta} \right) - \beta_t \text{MtM}_t = \text{Nom}\times f(t) \times \left( \hat{S}_{t^\delta}-\hat{S}_t \right)$, thus:
+\begin{align*}
+    \mathbb{E}_t[ ( \beta_{t^\delta} ( &\text{MtM}_{t^\delta} + \Delta_{t^\delta} ) - \beta_t ( \text{MtM}_t + \text{RIM}_t ) )^+ ] = \mathbb{E}_t\left[\left(X-\left(\VaR{a}{t}\left(X\right)\right)^+\right)^+\right]\\
+    &=\mathbb{E}_t\left[X1_{X\ge\left(\VaR{a}{t}\left(X\right)\right)^+}\right]-\left(\VaR{a}{t}\left(X\right)\right)^+\mathbb{P}_t\left(X\ge\left(\VaR{a}{t}\left(X\right)\right)^+\right)
+\end{align*}
+We need to consider two cases: $\VaR{a}{t}\left(X\right)\le0$ and $\VaR{a}{t}\left(X\right)\ge0$. First, if $\VaR{a}{t}\left(X\right)\le0$, the problem becomes:
+\begin{align*}
+    \mathbb{E}_t\left[ \left( \beta_{t^\delta} \left( \text{MtM}_{t^\delta} + \Delta_{t^\delta} \right) - \beta_t \left( \text{MtM}_t + \text{RIM}_t \right) \right)^+ \right] = \mathbb{E}_t\left[X^+\right] = \text{Nom} \times A(t) \times \hat{S}_t
+\end{align*}
+where $A(t) = f(t)\left[ \Phi\left( \frac{\sigma\sqrt{\delta}}{2} \right) - \Phi\left(- \frac{\sigma\sqrt{\delta}}{2} \right)\right]$. Then, if $\VaR{a}{t}\left(X\right)\ge0$, the problem becomes:
+\begin{align*}
+    \mathbb{E}_t[ ( \beta_{t^\delta} ( &\text{MtM}_{t^\delta} + \Delta_{t^\delta}) - \beta_t \left( \text{MtM}_t + \text{RIM}_t \right))^+ ]\\
+    &= \underbrace{\mathbb{E}_t\left[X1_{X\ge\VaR{a}{t}\left(X\right)}\right]}_{(1-a)\ES{a}{t}[X]}-\VaR{a}{t}\left(X\right)\underbrace{\mathbb{P}_t\left(X\ge\VaR{a}{t}\left(X\right)\right)}_{1-a}\\
+    &=(1-a)\left[ \ES{a}{t} - \VaR{a}{t} \right](X)\\
+    &=\text{Nom}\times(1-a)f(t)\underbrace{\left[ \ES{a}{t} - \VaR{a}{t} \right]\left( \hat{S}_{t^\delta}-\hat{S}_t \right)}_{\hat{S}_t e^{-\frac{\sigma^2}{2}\delta}\left[ \ES{a}{t} - \VaR{a}{t} \right]\left( \exp{\sigma\left(W_{t^\delta} - W_t\right)} \right)}
+\end{align*}
+
+
+
+
+
+\noindent\textbf{Proposition 4.1}\\
+The $\text{CVA}^{rim}$ of the bank w/ RIM is given, at time 0, by:
+\[
+\text{CVA}_0^{rim} = \text{Nom} \times S_0 \times \int_0^T C(t)e^{\int_0^t \gamma_1(s)ds}\gamma_1(t) dt
+\]
+\textbf{\textit{Proof:}}\\
+
+
+
+
+
+
+\section{Conclusion}
+
+\end{document}
